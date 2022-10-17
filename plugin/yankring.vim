@@ -120,7 +120,7 @@ endif
 
 " When displaying the buffer, how many lines should it be
 if !exists('g:yankring_window_height')
-    let g:yankring_window_height = 8
+    let g:yankring_window_height = 9 + 1 + 1
 endif
 
 " When displaying the buffer, how many columns should it be
@@ -476,10 +476,10 @@ function! s:YRShow(...)
 
     " List is shown in order of replacement
     " assuming using previous yanks
-    let output = "--- YankRing ---\n"
-    let output = output . (show_registers == 1 ? 'Reg ' : 'Elem')."  Content\n"
+    let output = ""
 
     if show_registers == 1
+        let output = "Reg  Content\n"
         for reg_name in map( range(char2nr('0'), char2nr('9')) +
                     \ (range(char2nr('a'), char2nr('z')))
                     \, 'nr2char(v:val)'
@@ -487,6 +487,7 @@ function! s:YRShow(...)
             let output  = output . s:YRDisplayElem(reg_name, getreg(reg_name).',') . "\n"
         endfor
     else
+        let output = "Elem  Content\n"
         call s:YRHistoryRead()
         let disp_item_nr = 1
         for elem in s:yr_history_list
@@ -697,8 +698,7 @@ function! s:YRSearch(...)
 
     " List is shown in order of replacement
     " assuming using previous yanks
-    let output        = "--- YankRing ---\n"
-    let output        = output . "Elem  Content\n"
+    let output        = "Elem  Content\n"
     let valid_choices = []
 
     let search_result = filter(copy(s:yr_history_list), "v:val =~ '".s:yr_search."'")
