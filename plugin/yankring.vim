@@ -2968,7 +2968,6 @@ endif
 
 if g:yankring_enabled == 1
     " Create YankRing Maps
-    echom "yankring enable"
     " call s:YRMapsCreate()
 endif
 
